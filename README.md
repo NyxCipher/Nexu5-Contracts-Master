@@ -3,6 +3,8 @@ Nexu5 is accomidating a wealth of founding members and followers, by request of 
 For while, we have been re-writing and custom writing tests, while going over security of the contract. We know that Azuki was certified and vetted, however,
 are changes effect core compoents of the contract and required re-writing of the Chiru Labs contract in small parts to fit our needs. We are running two two claim lists and a public sale. This means that we have three minting functions plus a dev minting function. We found the quanity size from Azuki to be highly beneficial in segregating collection sizes. All in all we have written/re-written 58 tests with one failure on "does not revert for non-receivers:" - (ProviderError: VM Exception while processing transaction: revert ERC721A: transfer to non ERC721Receiver implementer). This will be checked over again on testnet in contract version 3.0. We are currently on contract version 2.0.
 
+Notice: Removed Functions For Security -- Some Tests Will Fail Unless Test Functions Are Replaced (Will Update The Tests ASAP To Account For Changes)
+
 ## Summary of Tests:
 - ERC721A
 -    Nexu5
