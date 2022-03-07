@@ -56,6 +56,10 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
     _;
   }
 
+  function _startTokenId() internal view virtual override returns (uint256) {
+        return 0;
+    }
+
 
   function founderMint(uint256 quantity) external payable callerIsUser {
     require(founderlist[msg.sender] > 0, "not eligible for founder mint");
@@ -230,7 +234,7 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
     return _exists(tokenId);
  }
 
- function safeMint(address to, uint256 quantity) public {
+ function safeMint(address to, uint256 quantity) internal {
     _safeMint(to, quantity);
  }
     

@@ -78,8 +78,6 @@ contract ERC721A is
   // Token symbol
   string private _symbol;
 
-  uint256 internal _currentIndex;
-
   // Mapping from token ID to ownership details
   // An empty struct value does not necessarily mean the token is unowned. See ownershipOf implementation for details.
   mapping(uint256 => TokenOwnership) private _ownerships;
@@ -133,7 +131,7 @@ contract ERC721A is
         // Counter underflow is impossible as _currentIndex does not decrement,
         // and it is initialized to _startTokenId()
         unchecked {
-            return _currentIndex - _startTokenId();
+            return currentIndex - _startTokenId();
         }
     }
 
@@ -377,7 +375,7 @@ contract ERC721A is
    * Tokens start existing when they are minted (`_mint`),
    */
   function _exists(uint256 tokenId) internal view returns (bool) {
-      return _startTokenId() <= tokenId && tokenId < _currentIndex;
+      return _startTokenId() <= tokenId && tokenId < currentIndex;
     } //return tokenId < currentIndex;
 
   function _safeMint(address to, uint256 quantity) internal {
@@ -400,7 +398,7 @@ contract ERC721A is
     uint256 quantity,
     bytes memory _data
   ) internal {
-    uint256 startTokenId = _currentIndex; // from currentIndex
+    uint256 startTokenId = currentIndex; // from currentIndex
     require(to != address(0), "ERC721A: mint to the zero address"); // failing test
     // We know if the first token in the batch doesn't exist, the other ones don't as well, because of serial ordering.
     require(!_exists(startTokenId), "ERC721A: token already minted");
@@ -427,7 +425,7 @@ contract ERC721A is
       updatedIndex++;
     }
 
-    _currentIndex = updatedIndex;
+    currentIndex = updatedIndex;
     _afterTokenTransfers(address(0), to, startTokenId, quantity);
   }
 

@@ -21,6 +21,7 @@ const createTestSuite = ({ contract, constructorArgs }) =>
         await this.erc721a.deployed();
 
         this.startTokenId = this.erc721a.startTokenId ? (await this.erc721a.startTokenId()).toNumber() : 0;
+
       });
 
       context('with no minted tokens', async function () {
@@ -164,14 +165,15 @@ const createTestSuite = ({ contract, constructorArgs }) =>
 
         describe('exists', async function () {
           it('verifies valid tokens', async function () {
-            for (let tokenId = this.startTokenId; tokenId < 6 + this.startTokenId; tokenId++) {
+            // Account For Start At 1 vs 0 - Override
+            for (let tokenId = this.startTokenId; tokenId < 7 + this.startTokenId; tokenId++) {
               const exists = await this.erc721a.exists(tokenId);
               expect(exists).to.be.true;
             }
           });
 
           it('verifies invalid tokens', async function () {
-            expect(await this.erc721a.exists(7 + this.startTokenId)).to.be.false;
+            expect(await this.erc721a.exists(8 + this.startTokenId)).to.be.false;
           });
         });
 
@@ -396,44 +398,44 @@ const createTestSuite = ({ contract, constructorArgs }) =>
 
         describe('safeMint', function () {
           it('successfully mints a single token', async function () {
-            const mintTx = await this.erc721a['safeMint(address,uint256)'](this.receiver.address, 1);
+            const mintTx = await this.erc721a.connect(this.addr1).publicSaleMint(1, {value: 2000});
             await expect(mintTx)
               .to.emit(this.erc721a, 'Transfer')
-              .withArgs(ZERO_ADDRESS, this.receiver.address, this.startTokenId);
+              .withArgs(ZERO_ADDRESS, this.addr1.address, this.startTokenId);
             await expect(mintTx)
               .to.emit(this.receiver, 'Received')
               .withArgs(this.owner.address, ZERO_ADDRESS, this.startTokenId, '0x', GAS_MAGIC_VALUE);
-            expect(await this.erc721a.ownerOf(this.startTokenId)).to.equal(this.receiver.address);
+            expect(await this.erc721a.ownerOf(this.startTokenId)).to.equal(this.addr1.address);
           });
 
           it('successfully mints multiple tokens', async function () {
-            const mintTx = await this.erc721a['safeMint(address,uint256)'](this.receiver.address, 5);
+            const mintTx = await this.erc721a.publicSaleMint(5, {value: 10000});
             for (let tokenId = this.startTokenId; tokenId < 5 + this.startTokenId; tokenId++) {
               await expect(mintTx)
                 .to.emit(this.erc721a, 'Transfer')
-                .withArgs(ZERO_ADDRESS, this.receiver.address, tokenId);
+                .withArgs(ZERO_ADDRESS, this.owner.address, tokenId);
               await expect(mintTx)
                 .to.emit(this.receiver, 'Received')
                 .withArgs(this.owner.address, ZERO_ADDRESS, tokenId, '0x', GAS_MAGIC_VALUE);
-              expect(await this.erc721a.ownerOf(tokenId)).to.equal(this.receiver.address);
+              expect(await this.erc721a.ownerOf(tokenId)).to.equal(this.owner.address);
             }
           });
 
           it('rejects mints to the zero address', async function () {
-            await expect(this.erc721a['safeMint(address,uint256)'](ZERO_ADDRESS, 1)).to.be.revertedWith(
+            await expect(this.erc721a.connect(this.zero).publicSaleMint(1, {value: 2000})).to.be.revertedWith(
               'ERC721A: mint to the zero address'
             );
           });
 
           it('requires quantity to be greater than 0', async function () {
-            await expect(this.erc721a['safeMint(address,uint256)'](this.owner.address, 0)).to.be.revertedWith(
+            await expect(this.erc721a.connect(this.owner).publicSaleMint(0)).to.be.revertedWith(
               'ERC721A: quantity to mint too low'
             );
           });
 
           it('reverts for non-receivers', async function () {
             const nonReceiver = this.erc721a;
-            await expect(this.erc721a['safeMint(address,uint256)'](nonReceiver.address, 1)).to.be.revertedWith(
+            await expect(this.erc721a.connect(nonReceiver.address).publicSaleMint(1,{value: 2000})).to.be.revertedWith(
               'ERC721A: transfer to non ERC721Receiver implementer'
             );
           });
@@ -447,7 +449,7 @@ const createTestSuite = ({ contract, constructorArgs }) =>
             await expect(mintTx)
               .to.emit(this.erc721a, 'Transfer')
               .withArgs(ZERO_ADDRESS, this.owner.address, this.startTokenId);
-            await expect(mintTx).to.not.emit(this.receiver, 'Received');
+            await expect(mintTx).to.not.emit(this.owner, 'Received');
             expect(await this.erc721a.ownerOf(this.startTokenId)).to.equal(this.owner.address);
           });
 
@@ -457,7 +459,7 @@ const createTestSuite = ({ contract, constructorArgs }) =>
               await expect(mintTx)
                 .to.emit(this.erc721a, 'Transfer')
                 .withArgs(ZERO_ADDRESS, this.owner.address, tokenId);
-              await expect(mintTx).to.not.emit(this.receiver, 'Received');
+              await expect(mintTx).to.not.emit(this.owner, 'Received');
               expect(await this.erc721a.ownerOf(tokenId)).to.equal(this.owner.address);
             }
           });
@@ -473,7 +475,7 @@ const createTestSuite = ({ contract, constructorArgs }) =>
 
           it('rejects mints to the zero address', async function () {
             // const mintTx = this.erc721a['safeMint(address,uint256)'](ZERO_ADDRESS, 1);
-            await expectRevert(this.erc721a['safeMint(address,uint256)'](ZERO_ADDRESS, 1), 'revert ERC721A: mint to the zero address');
+            await expectRevert(this.erc721a.connect(this.zero).publicSaleMint(1, {value: 2000}), 'revert ERC721A: mint to the zero address');
             // Txn Reverts Successfully
             // Cannot Catch Revert using v trying ^
             //await expect(mintTx)
