@@ -59,9 +59,14 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
   function _startTokenId() internal view virtual override returns (uint256) {
         return 0;
     }
+  
+  function returnFounderQty() public view returns (uint256){
+    return founderlist[msg.sender];
+  }
 
 
-  function founderMint(uint256 quantity) external payable callerIsUser {
+  function founderMint() external payable callerIsUser {
+    uint256 quantity = returnFounderQty();
     require(founderlist[msg.sender] > 0, "not eligible for founder mint");
     require(
       totalSupply() + quantity <= amountForFounders,
@@ -72,9 +77,9 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
       "can not mint this many"
     );
     uint256 totalCost = getFounderPrice();
-    founderlist[msg.sender]-quantity;
+    delete founderlist[msg.sender];
     _safeMint(msg.sender, quantity);
-    refundIfOver(totalCost);
+    // refundIfOver(totalCost);
   }
 
   function allowlistMint() external payable callerIsUser {
@@ -84,7 +89,7 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
     require(totalSupply() + 1 <= collectionSize, "reached max supply");
     allowlist[msg.sender]--;
     _safeMint(msg.sender, 1);
-    refundIfOver(price);
+    // refundIfOver(price);
   }
 
   function publicSaleMint(uint256 quantity)
@@ -105,15 +110,15 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
       "can not mint this many"
     );
     _safeMint(msg.sender, quantity);
-    refundIfOver(publicPrice * quantity);
+    // refundIfOver(publicPrice * quantity);
   }
 
-  function refundIfOver(uint256 price) private {
+  /*function refundIfOver(uint256 price) private {
     require(msg.value >= price, "Need to send more ETH.");
     if (msg.value > price) {
       payable(msg.sender).transfer(msg.value - price);
     }
-  }
+  }*/
 
  function isPublicSaleOn(
     uint256 publicPriceWei

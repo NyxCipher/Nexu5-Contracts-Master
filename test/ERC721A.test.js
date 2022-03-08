@@ -395,7 +395,7 @@ const createTestSuite = ({ contract, constructorArgs }) =>
           this.receiver = await this.ERC721Receiver.deploy(RECEIVER_MAGIC_VALUE);
           await this.erc721a.SetupPublicSaleInfo(2000);
         });
-
+        
         describe('safeMint', function () {
           it('successfully mints a single token', async function () {
             const mintTx = await this.erc721a.connect(this.addr1).publicSaleMint(1, {value: 2000});

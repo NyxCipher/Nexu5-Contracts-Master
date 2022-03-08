@@ -369,8 +369,8 @@
       ]
     },
     "/Users/mtd/Documents/Nexu5-Contract/Nexu5-Contracts-Master/contracts/Nexu5.sol": {
-      "lastModificationDate": 1646624037706,
-      "contentHash": "175f0af036f54f92416a9ffb6eed7742",
+      "lastModificationDate": 1646702155017,
+      "contentHash": "f3d70a2d0d10b489928067482a8d2cb8",
       "sourceName": "contracts/Nexu5.sol",
       "solcConfig": {
         "version": "0.8.11",

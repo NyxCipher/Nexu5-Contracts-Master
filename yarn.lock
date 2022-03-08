@@ -764,6 +764,14 @@
     "web3" "^1.2.5"
     "web3-utils" "^1.2.5"
 
+"@resolver-engine/core@^0.2.1":
+  "integrity" "sha512-nsLQHmPJ77QuifqsIvqjaF5B9aHnDzJjp73Q1z6apY3e9nqYrx4Dtowhpsf7Jwftg/XzVDEMQC+OzUBNTS+S1A=="
+  "resolved" "https://registry.npmjs.org/@resolver-engine/core/-/core-0.2.1.tgz"
+  "version" "0.2.1"
+  dependencies:
+    "debug" "^3.1.0"
+    "request" "^2.85.0"
+
 "@resolver-engine/core@^0.3.3":
   "integrity" "sha512-eB8nEbKDJJBi5p5SrvrvILn4a0h42bKtbCTri3ZxCGt6UvoQyp7HnGOfki944bUjBSHKK3RvgfViHn+kqdXtnQ=="
   "resolved" "https://registry.npmjs.org/@resolver-engine/core/-/core-0.3.3.tgz"
@@ -773,12 +781,29 @@
     "is-url" "^1.2.4"
     "request" "^2.85.0"
 
+"@resolver-engine/fs@^0.2.1":
+  "integrity" "sha512-7kJInM1Qo2LJcKyDhuYzh9ZWd+mal/fynfL9BNjWOiTcOpX+jNfqb/UmGUqros5pceBITlWGqS4lU709yHFUbg=="
+  "resolved" "https://registry.npmjs.org/@resolver-engine/fs/-/fs-0.2.1.tgz"
+  "version" "0.2.1"
+  dependencies:
+    "@resolver-engine/core" "^0.2.1"
+    "debug" "^3.1.0"
+
 "@resolver-engine/fs@^0.3.3":
   "integrity" "sha512-wQ9RhPUcny02Wm0IuJwYMyAG8fXVeKdmhm8xizNByD4ryZlx6PP6kRen+t/haF43cMfmaV7T3Cx6ChOdHEhFUQ=="
   "resolved" "https://registry.npmjs.org/@resolver-engine/fs/-/fs-0.3.3.tgz"
   "version" "0.3.3"
   dependencies:
     "@resolver-engine/core" "^0.3.3"
+    "debug" "^3.1.0"
+
+"@resolver-engine/imports-fs@^0.2.2":
+  "integrity" "sha512-gFCgMvCwyppjwq0UzIjde/WI+yDs3oatJhozG9xdjJdewwtd7LiF0T5i9lrHAUtqrQbqoFE4E+ZMRVHWpWHpKQ=="
+  "resolved" "https://registry.npmjs.org/@resolver-engine/imports-fs/-/imports-fs-0.2.2.tgz"
+  "version" "0.2.2"
+  dependencies:
+    "@resolver-engine/fs" "^0.2.1"
+    "@resolver-engine/imports" "^0.2.2"
     "debug" "^3.1.0"
 
 "@resolver-engine/imports-fs@^0.3.3":
@@ -789,6 +814,15 @@
     "@resolver-engine/fs" "^0.3.3"
     "@resolver-engine/imports" "^0.3.3"
     "debug" "^3.1.0"
+
+"@resolver-engine/imports@^0.2.2":
+  "integrity" "sha512-u5/HUkvo8q34AA+hnxxqqXGfby5swnH0Myw91o3Sm2TETJlNKXibFGSKBavAH+wvWdBi4Z5gS2Odu0PowgVOUg=="
+  "resolved" "https://registry.npmjs.org/@resolver-engine/imports/-/imports-0.2.2.tgz"
+  "version" "0.2.2"
+  dependencies:
+    "@resolver-engine/core" "^0.2.1"
+    "debug" "^3.1.0"
+    "hosted-git-info" "^2.6.0"
 
 "@resolver-engine/imports@^0.3.3":
   "integrity" "sha512-anHpS4wN4sRMwsAbMXhMfOD/y4a4Oo0Cw/5+rue7hSwGWsDOQaAU1ClK1OxjUC35/peazxEl8JaSRRS+Xb8t3Q=="
@@ -7220,6 +7254,11 @@
   dependencies:
     "minimist" "^1.2.5"
 
+"mkdirp@^1.0.4":
+  "integrity" "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="
+  "resolved" "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
+  "version" "1.0.4"
+
 "mnemonist@^0.38.0":
   "integrity" "sha512-bZTFT5rrPKtPJxj8KSV0WkPyNxl72vQepqqVUAW2ARUpUSF2qXMB6jZj7hW5/k7C1rtpzqbD/IIbJwLXUjCHeg=="
   "resolved" "https://registry.npmjs.org/mnemonist/-/mnemonist-0.38.5.tgz"
@@ -9857,6 +9896,17 @@
   "integrity" "sha512-0z3j8R7MCjy10kc/g+qg7Ln3alJTodw9aDuVWZa3uiWqfuBMKeAeP2ocWcxoyM3D73yz3Jt/Pu4qPr4wHSdB/Q=="
   "resolved" "https://registry.npmjs.org/true-case-path/-/true-case-path-2.2.1.tgz"
   "version" "2.2.1"
+
+"truffle-flattener@^1.6.0":
+  "integrity" "sha512-scS5Bsi4CZyvlrmD4iQcLHTiG2RQFUXVheTgWeH6PuafmI+Lk5U87Es98loM3w3ImqC9/fPHq+3QIXbcPuoJ1Q=="
+  "resolved" "https://registry.npmjs.org/truffle-flattener/-/truffle-flattener-1.6.0.tgz"
+  "version" "1.6.0"
+  dependencies:
+    "@resolver-engine/imports-fs" "^0.2.2"
+    "@solidity-parser/parser" "^0.14.1"
+    "find-up" "^2.1.0"
+    "mkdirp" "^1.0.4"
+    "tsort" "0.0.1"
 
 "ts-essentials@^1.0.0":
   "integrity" "sha512-q3N1xS4vZpRouhYHDPwO0bDW3EZ6SK9CrrDHxi/D6BPReSjpVgWIOpLS2o0gSBZm+7q/wyKp6RVM1AeeW7uyfQ=="
