@@ -79,7 +79,6 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
     uint256 totalCost = getFounderPrice();
     delete founderlist[msg.sender];
     _safeMint(msg.sender, quantity);
-    // refundIfOver(totalCost);
   }
 
   function allowlistMint() external payable callerIsUser {
@@ -89,7 +88,6 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
     require(totalSupply() + 1 <= collectionSize, "reached max supply");
     allowlist[msg.sender]--;
     _safeMint(msg.sender, 1);
-    // refundIfOver(price);
   }
 
   function publicSaleMint(uint256 quantity)
@@ -110,15 +108,7 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
       "can not mint this many"
     );
     _safeMint(msg.sender, quantity);
-    // refundIfOver(publicPrice * quantity);
   }
-
-  /*function refundIfOver(uint256 price) private {
-    require(msg.value >= price, "Need to send more ETH.");
-    if (msg.value > price) {
-      payable(msg.sender).transfer(msg.value - price);
-    }
-  }*/
 
  function isPublicSaleOn(
     uint256 publicPriceWei
