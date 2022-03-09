@@ -65,8 +65,7 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
   }
 
 
-  function founderMint() external payable callerIsUser {
-    uint256 quantity = returnFounderQty();
+  function founderMint(uint256 quantity) external payable callerIsUser {
     require(founderlist[msg.sender] > 0, "not eligible for founder mint");
     require(
       totalSupply() + quantity <= amountForFounders,
@@ -77,7 +76,7 @@ contract Nexu5 is ERC721A, Ownable, ReentrancyGuard {
       "can not mint this many"
     );
     uint256 totalCost = getFounderPrice();
-    delete founderlist[msg.sender];
+    founderlist[msg.sender] -= quantity;
     _safeMint(msg.sender, quantity);
   }
 
